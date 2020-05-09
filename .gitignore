@@ -1,4 +1,5 @@
 .DS_Store
+git.api.token.txt
 *.pyc
 *.log
 *.swp
