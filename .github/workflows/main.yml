@@ -112,12 +112,12 @@ jobs:
             docker stop $(docker ps -a -q)
             # clean system from old images volumes etc b4 deploy:
             yes | docker system prune --all
-            # remove static volume if any as we need updated files each time:
+            # remove static volume if any as we do not need old static files:
             docker volume rm app_static-root
-            # now we have only volumes with data on remote host
+            # now we have only volumes with needed data (media and database) on remote host,
             # skip -d parameter to monitor containers activity through github actions
             # docker-compose -f docker-compose.prod.yml up
             docker-compose -f docker-compose.prod.yml up -d
-            # clean system from unneeded stuff after builds:
+            # clean system from unneeded dockerstuff:
             yes | docker system prune --volumes
           ENDSSH
