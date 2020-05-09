@@ -111,7 +111,10 @@ jobs:
             # stop all running containers on host if any
             docker stop $(docker ps -a -q)
             # clean system from old images volumes etc b4 deploy:
-            yes | docker system prune --all --volumes
+            yes | docker system prune --all
+            # remove static volume if any as we need updated files each time:
+            docker volume rm app_static-root
+            # now we have only volumes with data on remote host
             # skip -d parameter to monitor containers activity through github actions
             # docker-compose -f docker-compose.prod.yml up
             docker-compose -f docker-compose.prod.yml up -d
