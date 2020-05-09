@@ -17,6 +17,7 @@ services:
     image: "${DB_IMAGE}"
     expose:
       - "5432"
+
   redis:
     build:
       context: .

@@ -108,8 +108,10 @@ jobs:
             docker pull $DB_IMAGE
             docker pull $REDIS_IMAGE
             docker pull $ELASTIC_IMAGE
-            # clean system from old images:
-            echo yes | docker system prune
+            # stop all containers
+            docker stop $(docker ps -a -q)
+            # clean system from old images volumes etc.:
+            echo yes | docker system prune --all --volumes
             # skip -d parameter to monitor containers activity through github actions
             # docker-compose -f docker-compose.prod.yml up
             docker-compose -f docker-compose.prod.yml up -d
