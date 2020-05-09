@@ -3,7 +3,7 @@ name: Continuous Integration and Delivery
 on: [push]
 
 env:
-  WEB_IMAGE:     docker.pkg.github.com/$GITHUB_REPOSITORY/app2
+  WEB_IMAGE:     docker.pkg.github.com/$GITHUB_REPOSITORY/web2
   NGINX_IMAGE:   docker.pkg.github.com/$GITHUB_REPOSITORY/nginx2
   DB_IMAGE:      docker.pkg.github.com/$GITHUB_REPOSITORY/db2
   ELASTIC_IMAGE: docker.pkg.github.com/$GITHUB_REPOSITORY/elastic2
@@ -23,11 +23,11 @@ jobs:
           echo SQL_ENGINE=django.db.backends.postgresql >> .env
           echo DATABASE=postgres >> .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
-          echo SQL_DATABASE=${{ secrets.SQL_DATABASE }} >> .env
-          echo SQL_USER=${{ secrets.SQL_USER }} >> .env
-          echo SQL_PASSWORD=${{ secrets.SQL_PASSWORD }} >> .env
-          echo SQL_HOST=${{ secrets.SQL_HOST }} >> .env
-          echo SQL_PORT=${{ secrets.SQL_PORT }} >> .env
+          #echo SQL_DATABASE=${{ secrets.SQL_DATABASE }} >> .env
+          #echo SQL_USER=${{ secrets.SQL_USER }} >> .env
+          #echo SQL_PASSWORD=${{ secrets.SQL_PASSWORD }} >> .env
+          #echo SQL_HOST=${{ secrets.SQL_HOST }} >> .env
+          #echo SQL_PORT=${{ secrets.SQL_PORT }} >> .env
           echo DJANGO_ALLOWED_HOSTS=5.63.154.150 localhost 127.0.0.1 [::1] >> .env
       - name: Set environment variables
         run: |
@@ -71,11 +71,11 @@ jobs:
           echo SQL_ENGINE=django.db.backends.postgresql >> .env
           echo DATABASE=postgres >> .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
-          echo SQL_DATABASE=${{ secrets.SQL_DATABASE }} >> .env
-          echo SQL_USER=${{ secrets.SQL_USER }} >> .env
-          echo SQL_PASSWORD=${{ secrets.SQL_PASSWORD }} >> .env
-          echo SQL_HOST=${{ secrets.SQL_HOST }} >> .env
-          echo SQL_PORT=${{ secrets.SQL_PORT }} >> .env
+          #echo SQL_DATABASE=${{ secrets.SQL_DATABASE }} >> .env
+          #echo SQL_USER=${{ secrets.SQL_USER }} >> .env
+          #echo SQL_PASSWORD=${{ secrets.SQL_PASSWORD }} >> .env
+          #echo SQL_HOST=${{ secrets.SQL_HOST }} >> .env
+          #echo SQL_PORT=${{ secrets.SQL_PORT }} >> .env
           echo WEB_IMAGE=${{ env.WEB_IMAGE }} >> .env
           echo NGINX_IMAGE=${{ env.NGINX_IMAGE }} >> .env
           echo DB_IMAGE=${{ env.DB_IMAGE }} >> .env
