@@ -1,3 +1,8 @@
+Run into docker containers: wagtail + uwsgi >> nginx >> postgres >> redis >> elasticsearch .
+
+
+
+
 Wagtail demo project
 =======================
 
