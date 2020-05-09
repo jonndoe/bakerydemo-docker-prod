@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/docker_postgres.conf
-      #cache_from:
-       # - "${DB_IMAGE}"
+      cache_from:
+        - "${DB_IMAGE}"
     environment:
       POSTGRES_DB: app_db
       POSTGRES_USER: app_user
@@ -19,8 +19,8 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/docker_redis.conf
-      #cache_from:
-       # - "${REDIS_IMAGE}"
+      cache_from:
+        - "${REDIS_IMAGE}"
     restart: always
     image: "${REDIS_IMAGE}"
     expose:
@@ -29,8 +29,8 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/docker_elastic.conf
-      #cache_from:
-       # - "${ELASTIC_IMAGE}"
+      cache_from:
+        - "${ELASTIC_IMAGE}"
     image: "${ELASTIC_IMAGE}"
     restart: always
     expose:
@@ -44,8 +44,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.prod
-      #cache_from:
-       # - "${WEB_IMAGE}"
+      cache_from:
+        - "${WEB_IMAGE}"
     image: "${WEB_IMAGE}"
     volumes:
       - static-root:/code/bakerydemo/collect_static
@@ -70,8 +70,8 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/docker_nginx.conf
-      #cache_from:
-      #  - "${NGINX_IMAGE}"
+      cache_from:
+        - "${NGINX_IMAGE}"
     depends_on:
      - web
     ports:
