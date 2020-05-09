@@ -3,7 +3,7 @@ name: Continuous Integration and Delivery
 on: [push]
 
 env:
-  WEB_IMAGE:     docker.pkg.github.com/$GITHUB_REPOSITORY/web2
+  WEB_IMAGE:     docker.pkg.github.com/$GITHUB_REPOSITORY/app2
   NGINX_IMAGE:   docker.pkg.github.com/$GITHUB_REPOSITORY/nginx2
   DB_IMAGE:      docker.pkg.github.com/$GITHUB_REPOSITORY/db2
   ELASTIC_IMAGE: docker.pkg.github.com/$GITHUB_REPOSITORY/elastic2
@@ -94,8 +94,10 @@ jobs:
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          scp  -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./.env ./docker-compose.ci.yml root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }}:/app
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }} << 'ENDSSH'
+          scp  -o StrictHostKeyChecking=no -r ./.env ./.env.prod.db ./docker-compose.prod.yml root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }}:/app
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }} << 'ENDSSH'
+          #scp  -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./.env ./docker-compose.prod.yml root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }}:/app
+          #ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }} << 'ENDSSH'
             cd /app
             source .env
             docker login docker.pkg.github.com -u jonndoe -p ${{ secrets.API_TOKEN }}
@@ -104,5 +106,5 @@ jobs:
             docker pull $DB_IMAGE
             docker pull $REDIS_IMAGE
             docker pull $ELASTIC_IMAGE
-            docker-compose -f docker-compose.ci.yml up
+            docker-compose -f docker-compose.prod.yml up
           ENDSSH

@@ -1,3 +1,5 @@
+# this file is used to start containers on remote server
+
 version: '2'
 
 services:
@@ -6,29 +8,24 @@ services:
       POSTGRES_DB: app_db
       POSTGRES_USER: app_user
       POSTGRES_PASSWORD: changeme
-    restart: always
-    image: postgres:9.6
+    image: "$DB_IMAGE"
     expose:
       - "5432"
   redis:
-    restart: always
-    image: redis:3.0
+    image: "$REDIS_IMAGE"
     expose:
       - "6379"
   elasticsearch:
-    image: elasticsearch:2.3
-    restart: always
+    image: "$ELASTIC_IMAGE"
     expose:
       - "9200"
   app:
+    image: "${WEB_IMAGE}"
     environment:
       DJANGO_SECRET_KEY: changeme
       DATABASE_URL: postgres://app_user:changeme@db/app_db
       CACHE_URL: redis://redis
       ELASTICSEARCH_ENDPOINT: elasticsearch
-    build:
-      context: .
-      dockerfile: ./Dockerfile.prod
     volumes:
       - static-root:/code/bakerydemo/collect_static
       - media-root:/code/bakerydemo/media
@@ -44,13 +41,10 @@ services:
       - elasticsearch
 
   nginx:
-    restart: always
     volumes:
       - media-root:/code/bakerydemo/media
       - static-root:/code/bakerydemo/static
-    build:
-     context: .
-     dockerfile: dockerfiles/docker_nginx.conf
+    image: "${NGINX_IMAGE}"
     depends_on:
      - app
     ports:

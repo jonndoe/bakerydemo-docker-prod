@@ -1,43 +1,28 @@
-# this file is used to build containers on github actions and store them.
+# this file is used to build production containers locally on develop host.
 
 version: '2'
 
 services:
   db:
-    build:
-      context: .
-      dockerfile: dockerfiles/docker_postgres.conf
-      #cache_from:
-       # - "${DB_IMAGE}"
     environment:
       POSTGRES_DB: app_db
       POSTGRES_USER: app_user
       POSTGRES_PASSWORD: changeme
     restart: always
-    image: "${DB_IMAGE}"
+    image: postgres:9.6
     expose:
       - "5432"
   redis:
-    build:
-      context: .
-      dockerfile: dockerfiles/docker_redis.conf
-     # cache_from:
-       # - "${REDIS_IMAGE}"
     restart: always
-    image: "${REDIS_IMAGE}"
+    image: redis:3.0
     expose:
       - "6379"
   elasticsearch:
-    build:
-      context: .
-      dockerfile: dockerfiles/docker_elastic.conf
-      #cache_from:
-       # - "${ELASTIC_IMAGE}"
-    image: "${ELASTIC_IMAGE}"
+    image: elasticsearch:2.3
     restart: always
     expose:
       - "9200"
-  web:
+  app:
     environment:
       DJANGO_SECRET_KEY: changeme
       DATABASE_URL: postgres://app_user:changeme@db/app_db
@@ -46,9 +31,6 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.prod
-     # cache_from:
-        #- "${WEB_IMAGE}"
-    image: "${WEB_IMAGE}"
     volumes:
       - static-root:/code/bakerydemo/collect_static
       - media-root:/code/bakerydemo/media
@@ -65,17 +47,14 @@ services:
 
   nginx:
     restart: always
-    image: "${NGINX_IMAGE}"
     volumes:
       - media-root:/code/bakerydemo/media
       - static-root:/code/bakerydemo/static
     build:
-      context: .
-      dockerfile: dockerfiles/docker_nginx.conf
-      #cache_from:
-        #- "${NGINX_IMAGE}"
+     context: .
+     dockerfile: dockerfiles/docker_nginx.conf
     depends_on:
-     - web
+     - app
     ports:
       - "8080:8080"
 

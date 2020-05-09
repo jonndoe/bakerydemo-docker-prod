@@ -1,3 +1,6 @@
+# this is original docker-compose file for development only
+# no nginx configured here.
+
 version: '2'
 
 services:
