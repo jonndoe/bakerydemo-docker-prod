@@ -96,7 +96,7 @@ jobs:
         run: |
           scp  -o StrictHostKeyChecking=no -r ./docker-compose.prod.yml root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }}:/app
           ssh -o StrictHostKeyChecking=no root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }} << 'ENDSSH'
-          # stop all docker containers:
+          # stop all docker containers: docker stop $(docker ps -a -q)
           #ssh -o StrictHostKeyChecking=no root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }} docker stop $(docker ps -a -q)
           #scp  -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./.env ./docker-compose.prod.yml root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }}:/app
           #ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }} << 'ENDSSH'
@@ -108,5 +108,11 @@ jobs:
             docker pull $DB_IMAGE
             docker pull $REDIS_IMAGE
             docker pull $ELASTIC_IMAGE
-            docker-compose -f docker-compose.prod.yml up
+            # clean system from old images:
+            echo yes | docker system prune
+            # skip -d parameter to monitor containers activity through github actions
+            # docker-compose -f docker-compose.prod.yml up
+            docker-compose -f docker-compose.prod.yml up -d
+            # clean system from old images after builds:
+            echo yes | docker system prune
           ENDSSH
