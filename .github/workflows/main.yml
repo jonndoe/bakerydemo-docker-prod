@@ -96,6 +96,8 @@ jobs:
         run: |
           scp  -o StrictHostKeyChecking=no -r ./docker-compose.prod.yml root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }}:/app
           ssh -o StrictHostKeyChecking=no root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }} << 'ENDSSH'
+          # stop all docker containers:
+          #ssh -o StrictHostKeyChecking=no root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }} docker stop $(docker ps -a -q)
           #scp  -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./.env ./docker-compose.prod.yml root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }}:/app
           #ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }} << 'ENDSSH'
             cd /app

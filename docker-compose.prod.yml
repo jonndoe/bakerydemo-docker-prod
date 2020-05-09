@@ -22,6 +22,7 @@ services:
   app:
     image: "${WEB_IMAGE}"
     environment:
+      DJANGO_ALLOWED_HOSTS: 5.63.154.150 localhost 127.0.0.1 [::1]
       DJANGO_SECRET_KEY: changeme
       DATABASE_URL: postgres://app_user:changeme@db/app_db
       CACHE_URL: redis://redis
