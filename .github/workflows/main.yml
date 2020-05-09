@@ -3,7 +3,7 @@ name: Continuous Integration and Delivery
 on: [push]
 
 env:
-  WEB_IMAGE:     docker.pkg.github.com/$GITHUB_REPOSITORY/web
+  WEB_IMAGE:     docker.pkg.github.com/$GITHUB_REPOSITORY/web2
   NGINX_IMAGE:   docker.pkg.github.com/$GITHUB_REPOSITORY/nginx
   DB_IMAGE:      docker.pkg.github.com/$GITHUB_REPOSITORY/db
   ELASTIC_IMAGE: docker.pkg.github.com/$GITHUB_REPOSITORY/elastic
