@@ -118,6 +118,6 @@ jobs:
             # skip -d parameter to monitor containers activity through github actions
             # docker-compose -f docker-compose.prod.yml up
             docker-compose -f docker-compose.prod.yml up -d
-            # clean system from old images after builds:
-            yes | docker system prune
+            # clean system from unneeded stuff after builds:
+            yes | docker system prune --volumes
           ENDSSH
