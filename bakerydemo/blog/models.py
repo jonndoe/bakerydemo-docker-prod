@@ -19,6 +19,61 @@ from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from bakerydemo.base.blocks import BaseStreamBlock
 
+# for customization of wagtails AbstractImage
+from django.utils.translation import gettext_lazy as _
+from django.db import models
+from wagtail.images.models import Image, AbstractImage, AbstractRendition
+
+from imagekit import ImageSpec
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFill, Adjust, ResizeToFit
+from .processors import Watermark
+
+
+def get_upload_to(instance, filename):
+    """
+    Obtain a valid upload path for an image file.
+
+    This needs to be a module-level function so that it can be referenced within migrations,
+    but simply delegates to the `get_upload_to` method of the instance, so that AbstractImage
+    subclasses can override it.
+    """
+    return instance.get_upload_to(filename)
+
+class CustomImage(AbstractImage):
+    # Add any extra fields to image here
+    # eg. To add a caption field:
+    # caption = models.CharField(max_length=255, blank=True)
+    file = ProcessedImageField(
+        verbose_name=_('file'),
+        upload_to=get_upload_to,
+        width_field='width',
+        height_field='height',
+        processors=[
+            ResizeToFit(1600, 500,
+                        # upscale=False
+                        ),
+            Watermark(),
+        ],
+        format='JPEG',
+        options={'quality': 60},
+    )
+
+    admin_form_fields = Image.admin_form_fields + (
+        # Then add the field names here to make them appear in the form:
+        # 'caption',
+        # But we changed existing field, so skip this step.
+    )
+
+
+class CustomRendition(AbstractRendition):
+    image = models.ForeignKey(CustomImage, on_delete=models.CASCADE, related_name='renditions')
+
+    class Meta:
+        unique_together = (
+            ('image', 'filter_spec', 'focal_point_key'),
+        )
+
 
 class BlogPeopleRelationship(Orderable, models.Model):
     """
@@ -60,7 +115,7 @@ class BlogPage(Page):
         help_text='Text to describe the page',
         blank=True)
     image = models.ForeignKey(
-        'wagtailimages.Image',
+        'blog.CustomImage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -143,7 +198,7 @@ class BlogIndexPage(RoutablePageMixin, Page):
         help_text='Text to describe the page',
         blank=True)
     image = models.ForeignKey(
-        'wagtailimages.Image',
+        'blog.CustomImage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,

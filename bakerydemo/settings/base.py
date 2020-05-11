@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'taggit',
     'wagtailfontawesome',
 
+    'imagekit',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -176,3 +178,6 @@ WAGTAILSEARCH_BACKENDS = {
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "bakerydemo"
+
+# Override AbstractImage
+WAGTAILIMAGES_IMAGE_MODEL = 'blog.CustomImage'
