@@ -27,7 +27,7 @@ from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from imagekit import ImageSpec
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill, Adjust, ResizeToFit
-from .processors import Watermark
+from .processors import Watermark_opacity
 
 
 def get_upload_to(instance, filename):
@@ -53,7 +53,7 @@ class CustomImage(AbstractImage):
             ResizeToFit(1600, 500,
                         # upscale=False
                         ),
-            Watermark(),
+            Watermark_opacity(),
         ],
         format='JPEG',
         options={'quality': 60},
