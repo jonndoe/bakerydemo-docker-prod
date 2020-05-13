@@ -81,7 +81,7 @@ jobs:
           echo DB_IMAGE=${{ env.DB_IMAGE }} >> .env
           echo REDIS_IMAGE=${{ env.REDIS_IMAGE }} >> .env
           echo ELASTIC_IMAGE=${{ env.ELASTIC_IMAGE }} >> .env
-          echo DJANGO_ALLOWED_HOSTS=5.63.154.150 localhost 127.0.0.1 [::1] >> .env
+          echo DJANGO_ALLOWED_HOSTS=www.pythonx.ru pythonx.ru 5.63.154.150 localhost 127.0.0.1 [::1] >> .env
       - name: Add the private SSH key to the ssh-agent
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
