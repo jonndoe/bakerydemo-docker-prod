@@ -51,7 +51,7 @@ services:
     depends_on:
      - app
     ports:
-      - "443:80"
+      - "443:443"
 
 volumes:
   media-root:

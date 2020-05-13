@@ -78,7 +78,7 @@ services:
     depends_on:
      - web
     ports:
-      - "443:80"
+      - "443:443"
 
 volumes:
   media-root:
