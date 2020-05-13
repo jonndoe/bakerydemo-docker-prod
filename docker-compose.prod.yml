@@ -52,6 +52,7 @@ services:
      - app
     ports:
       - "443:443"
+      - "80:80"
 
 volumes:
   media-root:
