@@ -19,3 +19,4 @@ __pycache__
 /Vagrantfile.local
 !.gitignore
 collect_static
+certs

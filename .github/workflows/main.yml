@@ -117,7 +117,7 @@ jobs:
             # now we have only volumes with needed data (media and database) on remote host,
             # skip -d parameter to monitor containers activity through github actions
             # docker-compose -f docker-compose.prod.yml up
-            docker-compose -f docker-compose.prod.yml up -d
+            docker-compose -f docker-compose.prod.traefik.ssl.yml up -d
 
             # clean system from unneeded dockerstuff:
             yes | docker system prune --volumes

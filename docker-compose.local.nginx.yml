@@ -1,4 +1,4 @@
-# this file is used to build production containers with ssl on remotehost host.
+# this file is used to build production containers locally on develop host.
 
 version: '2'
 
@@ -32,8 +32,8 @@ services:
       context: .
       dockerfile: ./Dockerfile.prod
     volumes:
-      - ./static-volume:/code/bakerydemo/collect_static
-      - ./media-volume:/code/bakerydemo/media
+      - static-root:/code/bakerydemo/collect_static
+      - media-root:/code/bakerydemo/media
     links:
       - db:db
       - redis:redis
@@ -44,3 +44,33 @@ services:
       - db
       - redis
       - elasticsearch
+
+  nginx:
+    restart: always
+    volumes:
+      - media-root:/code/bakerydemo/media
+      - static-root:/code/bakerydemo/static
+    build:
+     context: .
+     dockerfile: dockerfiles/docker_nginx.conf
+    depends_on:
+     - app
+    #ports:
+      #- "443:443"
+      #- "80:80"
+
+  traefik:
+    image: traefik:1.7.0
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - 80:3000
+      - 443:443
+    volumes:
+      - ./traefik.toml:/traefik.toml
+      - ./certs/:/certs/
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  media-root:
+  static-root:
