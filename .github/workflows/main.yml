@@ -110,15 +110,15 @@ jobs:
             docker pull $ELASTIC_IMAGE
             # stop all running containers on host if any
             docker stop $(docker ps -a -q)
-            # clean system from old images volumes etc b4 deploy:
+            # clean system from old images if any volumes etc b4 deploy:
             #yes | docker system prune --all
             # remove static volume if any as we do not need old static files:
-            #docker volume rm app_static-root
+            docker volume rm app_static-root
             # now we have only volumes with needed data (media and database) on remote host,
             # skip -d parameter to monitor containers activity through github actions
             # docker-compose -f docker-compose.prod.yml up
             docker-compose -f docker-compose.prod.traefik.ssl.yml up -d
 
-            # clean system from unneeded dockerstuff:
-            #yes | docker system prune --volumes
+            # clean system from unneeded dockerstuff and unused volumes:
+            yes | docker system prune --volumes
           ENDSSH
