@@ -119,6 +119,11 @@ jobs:
             # docker-compose -f docker-compose.prod.yml up
             docker-compose -f docker-compose.prod.traefik.ssl.yml up -d
 
+            # down and up the containers once more to ensure static files updated:
+            docker-compose -f docker-compose.prod.traefik.ssl.yml down
+            docker volume rm app_static-root
+            docker-compose -f docker-compose.prod.traefik.ssl.yml up --build -d
+
             # clean system from unneeded dockerstuff and unused volumes:
             yes | docker system prune --volumes
           ENDSSH
