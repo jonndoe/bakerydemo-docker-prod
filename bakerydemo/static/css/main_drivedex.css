@@ -1110,3 +1110,25 @@ span.outline {
     padding-right: 0;
     padding-left: 0;
 }
+
+.media-list .media img {
+    display: block;
+    height: auto;
+    width: auto;
+}
+
+.fa-thumbs-up {
+    color: green;
+}
+
+.fa-thumbs-down {
+    color: red;
+}
+
+.fa-flag {
+    color: blue;
+}
+
+.comment .content {
+  font-weight: 300;
+}

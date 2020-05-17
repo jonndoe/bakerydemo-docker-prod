@@ -2,7 +2,7 @@
 {% load comments %}
 {% load comments_xtd %}
 
-<div id="comments" class="media-list">
+<div id="comments" class="media-list w3-container">
     {% for comment in comment_list %}
     <div class="media pb-2">
         <a name="c{{ comment.id }}"></a>
@@ -21,7 +21,7 @@
                     </div>
                     {% endif %}
                     {% if comment.allow_thread and not comment.is_removed %}
-                    <a class="small mutedlink" href="{{ comment.get_reply_url }}">
+                    <a class="btn btn-secondary" href="{{ comment.get_reply_url }}">
                         {% trans "Reply" %}
                     </a>
                     {% endif %}
