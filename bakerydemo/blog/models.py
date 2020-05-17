@@ -184,6 +184,9 @@ class BlogPage(Page):
     # Empty list means that no child content types are allowed.
     subpage_types = []
 
+    def get_absolute_url(self):
+        return self.full_url
+
 
 class BlogIndexPage(RoutablePageMixin, Page):
     """

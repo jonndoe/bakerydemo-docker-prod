@@ -10,6 +10,9 @@ from wagtail.core import urls as wagtail_urls
 from bakerydemo.search import views as search_views
 from .api import api_router
 
+#django-comments-xtd
+from django.urls import path
+
 urlpatterns = [
     url(r'^django-admin/', admin.site.urls),
 
@@ -24,6 +27,8 @@ urlpatterns = [
     # django-allauth urls :
     url(r'', include('allauth.urls')),  # Creates urls like yourwebsite.com/login/
     # url(r'^accounts/', include('allauth.urls')), # Creates urls like yourwebsite.com/accounts/login/
+
+    path(r'comments/', include('django_comments_xtd.urls')),
 
 ]
 
