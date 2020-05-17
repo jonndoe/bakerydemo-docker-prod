@@ -12,3 +12,16 @@
       {% endif %}
   </li>
 {% endfor %}
+
+{% if request.user.is_authenticated %}
+  <li class="presentation">
+      <a href="{% url 'account_logout' %}" role="menuitem">Hi,<b>{{ request.user.username }}</b>!LogOut?</a>
+  </li>
+  {% else %}
+  <li class="presentation">
+      <a href="{% url 'account_login' %}" role="menuitem">SignIn</a>
+  </li>
+  <li class="presentation">
+      <a href="{% url 'account_signup' %}" role="menuitem">SignUp</a>
+  </li>
+{% endif %}

@@ -20,6 +20,11 @@ urlpatterns = [
 
     url(r'^sitemap\.xml$', sitemap),
     url(r'^api/v2/', api_router.urls),
+
+    # django-allauth urls :
+    url(r'', include('allauth.urls')),  # Creates urls like yourwebsite.com/login/
+    # url(r'^accounts/', include('allauth.urls')), # Creates urls like yourwebsite.com/accounts/login/
+
 ]
 
 
