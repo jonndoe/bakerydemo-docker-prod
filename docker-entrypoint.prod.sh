@@ -10,6 +10,7 @@ done
 
 if [ "$1" = '/venv/bin/uwsgi' ]; then
     /venv/bin/python manage.py migrate --noinput
+    /venv/bin/python manage.py load_initial_data
 
 
 fi
