@@ -94,7 +94,7 @@ jobs:
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          scp  -o StrictHostKeyChecking=no -r ./docker-compose.prod.traefik.ssl.yml root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }}:/app
+          scp  -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.traefik.ssl.yml root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }}:/app
           ssh -o StrictHostKeyChecking=no root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }} << 'ENDSSH'
           # stop all docker containers: docker stop $(docker ps -a -q)
           #ssh -o StrictHostKeyChecking=no root@${{ secrets.CLOUD_SERVER_IP_ADDRESS }} docker stop $(docker ps -a -q)
