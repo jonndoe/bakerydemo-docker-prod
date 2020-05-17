@@ -1,4 +1,4 @@
-Run into docker containers: wagtail + uwsgi >> nginx >> postgres >> redis >> elasticsearch .
+ Run into docker containers: wagtail + uwsgi >> nginx >> postgres >> redis >> elasticsearch .
 
 
 
